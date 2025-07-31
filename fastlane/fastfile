@@ -1,0 +1,26 @@
+default_platform(:ios)
+
+platform :ios do
+    desc "Build the iOS app using Xcode"
+    lane :build do
+        gym(
+            scheme: "React_Native_Hello_World",
+            # export_method: "development",
+            # output_directory: "build",
+            # output_name: "YourAppName.ipa"
+            workspace: "React_Native_Hello_World/ios/React_Native_Hello_World.xcworkspace",
+            configuration: "Debug",
+            destination: "generic/platform=iOS Simulator"
+        )
+    end
+end
+
+platform :android do
+    desc "Build android app"
+    lane :build do
+        gradle(
+            task: "assembleDebug",
+            project_dir: "React_Native_Hello_World/android",
+        )
+    end
+end
