@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-source "https://rubygems.org"
-
-gem "fastlane"
-=======
 source 'https://rubygems.org'
 
 # You may use http://rbenv.org/ or https://rvm.io/ to install and use this version
@@ -19,4 +14,5 @@ gem 'bigdecimal'
 gem 'logger'
 gem 'benchmark'
 gem 'mutex_m'
->>>>>>> 8516db3b18ff95e42bfc1b0331b2f78d6c8d23f7
+
+gem 'fastlane'
