@@ -13,6 +13,41 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 # Available Actions
 
+### test_all
+
+```sh
+[bundle exec] fastlane test_all
+```
+
+Run all tests and checks before building
+
+### run_unit_tests
+
+```sh
+[bundle exec] fastlane run_unit_tests
+```
+
+Run Jest unit tests
+
+### run_linting
+
+```sh
+[bundle exec] fastlane run_linting
+```
+
+Run ESLint code linting
+
+### ci
+
+```sh
+[bundle exec] fastlane ci
+```
+
+Full CI pipeline: test, then build for both platforms
+
+----
+
+
 ## iOS
 
 ### ios build
@@ -22,6 +57,22 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 ```
 
 Build the iOS app using Xcode
+
+### ios ios_build
+
+```sh
+[bundle exec] fastlane ios ios_build
+```
+
+Run iOS-specific tests and build
+
+### ios ios_test
+
+```sh
+[bundle exec] fastlane ios ios_test
+```
+
+Run iOS unit tests with Xcode
 
 ----
 
@@ -35,6 +86,22 @@ Build the iOS app using Xcode
 ```
 
 Build android app
+
+### android android_build
+
+```sh
+[bundle exec] fastlane android android_build
+```
+
+Run Android-specific tests and build
+
+### android android_test
+
+```sh
+[bundle exec] fastlane android android_test
+```
+
+Run Android unit tests
 
 ----
 

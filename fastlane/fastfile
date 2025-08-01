@@ -1,5 +1,47 @@
 default_platform(:ios)
 
+# ================================
+# TESTING AUTOMATION LANES
+# ================================
+
+desc "Run all tests and checks before building"
+lane :test_all do
+    run_unit_tests
+    run_linting
+    UI.success("✅ All tests passed!")
+end
+
+desc "Run Jest unit tests"
+lane :run_unit_tests do
+    Dir.chdir("../React_Native_Hello_World") do
+        sh("npm test -- --watchAll=false --coverage")
+    end
+end
+
+desc "Run ESLint code linting"
+lane :run_linting do
+    Dir.chdir("../React_Native_Hello_World") do
+        sh("npm run lint")
+    end
+end
+
+# ================================
+# CI/CD PIPELINE LANES
+# ================================
+
+desc "Full CI pipeline: test, then build for both platforms"
+lane :ci do
+    UI.message("Starting full CI pipeline...")
+    test_all
+    ios_build
+    android_build
+    UI.success("Full CI pipeline completed successfully!")
+end
+
+# ================================
+# iOS BUILD AUTOMATION LANES
+# ================================
+
 platform :ios do
     desc "Build the iOS app using Xcode"
     lane :build do
@@ -13,13 +55,50 @@ platform :ios do
             destination: "generic/platform=iOS Simulator"
         )
     end
+
+    desc "Run iOS-specific tests and build"
+    lane :ios_build do
+        UI.message("🍎 Starting iOS build...")
+        run_unit_tests
+        build
+        UI.success("✅ iOS build completed!")
+    end
+
+    desc "Run iOS unit tests with Xcode"
+    lane :ios_test do
+        run_tests(
+            workspace: "React_Native_Hello_World/ios/React_Native_Hello_World.xcworkspace",
+            scheme: "React_Native_Hello_World",
+            destination: "platform=iOS Simulator,name=iPhone 15,OS=latest"
+        )
+    end
 end
+
+# ================================
+# ANDROID BUILD AUTOMATION LANES
+# ================================
 
 platform :android do
     desc "Build android app"
     lane :build do
         gradle(
             task: "assembleDebug",
+            project_dir: "React_Native_Hello_World/android",
+        )
+    end
+
+    desc "Run Android-specific tests and build"
+    lane :android_build do
+        UI.message("🤖 Starting Android build...")
+        run_unit_tests
+        build
+        UI.success("✅ Android build completed!")
+    end
+
+    desc "Run Android unit tests"
+    lane :android_test do
+        gradle(
+            task: "test",
             project_dir: "React_Native_Hello_World/android",
         )
     end
